@@ -1,7 +1,13 @@
 import { useState as physicsState } from "react";
 import './index.css';
 
-function NewtonSecondLaw() {};
+function NewtonSecondLaw() {
+    return (
+        <div className="p-5 font-sans">
+            <h3 className="text-lg font-semibold mb-2">Newton's Third Law React Simulation</h3>
+        </div>
+    )
+};
 
 function NewtonThirdLaw() {
     // Track positions of Object A and Object B
