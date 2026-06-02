@@ -1,6 +1,8 @@
 import { useState as physicsState } from "react";
 import './index.css';
 
+function NewtonSecondLaw() {};
+
 function NewtonThirdLaw() {
     // Track positions of Object A and Object B
     const [posA, setPosA] = physicsState(0);
@@ -62,4 +64,4 @@ function NewtonThirdLaw() {
     );
 }
 
-export default NewtonThirdLaw;
+export default { NewtonSecondLaw, NewtonThirdLaw };
