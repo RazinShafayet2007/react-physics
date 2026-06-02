@@ -11,10 +11,10 @@ function NewtonThirdLaw() {
 
     const handleCollision = () => {
         // Object A moves (+50) and hits Object B
-        setPosA(posA + 50);
+        setPosA(posA + 190);
 
         // Object B gets hit by Object A and moves (+50)
-        setPosB(posB + 50);
+        setTimeout(() => setPosB(posB + 50), 100);
 
         // Newton's Third Law: For every action, there is an equal and opposite reaction
         setForceLog(`Object A applies a force to Object B, and Object B applies an equal and opposite force to Object A.`);
