@@ -14,7 +14,7 @@ function NewtonThirdLaw() {
         setPosA(posA + 190);
 
         // Object B gets hit by Object A and moves (+50)
-        setTimeout(() => setPosB(posB + 50), 100);
+        setTimeout(() => setPosB(posB + 190), 100);
 
         // Newton's Third Law: For every action, there is an equal and opposite reaction
         setForceLog(`Object A applies a force to Object B, and Object B applies an equal and opposite force to Object A.`);
