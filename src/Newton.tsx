@@ -64,4 +64,4 @@ function NewtonThirdLaw() {
     );
 }
 
-export default { NewtonSecondLaw, NewtonThirdLaw };
+export {NewtonThirdLaw, NewtonSecondLaw}; ;

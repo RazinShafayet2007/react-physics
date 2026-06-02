@@ -1,5 +1,5 @@
 import './App.css';
-import NewtonThirdLaw from './Newton.tsx';
+import {NewtonThirdLaw} from './Newton.tsx';
 
 function App() {
   return (
