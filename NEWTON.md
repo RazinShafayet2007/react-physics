@@ -45,6 +45,21 @@ This file explains the important lines in `src/Newton.tsx` and how they work. It
 - `button onClick={()=>setRunning(r=>!r)}`
   - toggles the animation loop (start/pause).
 
+### Example
+
+- Given: mass $m=2\ \mathrm{kg}$, applied force $F=6\ \mathrm{N}$. Using Newton's second law:
+
+  $$a = \frac{F}{m} = \frac{6}{2} = 3\ \mathrm{m/s^2}.$$ 
+
+- With the visualization scale $100\ \mathrm{px}=1\ \mathrm{m}$, acceleration in px/s^2 is:
+
+  $$a_{px} = \frac{a}{\text{pxToMeter}} = \frac{3}{1/100} = 300\ \mathrm{px/s^2}.$$ 
+
+- Starting from rest, after $t=0.5\ \mathrm{s}$ (Euler integration approximation):
+
+  Velocity: $v = v_0 + a_{px}\,t = 0 + 300\times0.5 = 150\ \mathrm{px/s}$. 
+
+  Position: $x = x_0 + v\,t = 0 + 150\times0.5 = 75\ \mathrm{px}$. 
 ---
 
 ## NewtonThirdLaw
@@ -77,6 +92,15 @@ This file explains the important lines in `src/Newton.tsx` and how they work. It
 
 - After collision we set updated positions and velocities via `setPosA`, `setPosB`, `setVelA`, `setVelB` so the UI animates with the new values.
 
+### Example
+
+- Two objects A and B with masses $m_A=1\ \mathrm{kg}$, $m_B=1\ \mathrm{kg}$. Initial velocities (in visualization units) are $v_A=120\ \mathrm{px/s}$, $v_B=0\ \mathrm{px/s}$. Treat px/s directly in collision formulas because both objects use the same scale.
+
+- For a 1D elastic collision the post-collision velocities are:
+
+  $$v'_A = \frac{v_A(m_A - m_B) + 2m_B v_B}{m_A + m_B}, \qquad v'_B = \frac{v_B(m_B - m_A) + 2m_A v_A}{m_A + m_B}.$$ 
+
+- With $m_A=m_B=1$, this simplifies to swapping velocities: $v'_A=0$, $v'_B=120$. That means after collision A stops and B moves right at 120 px/s (momentum and kinetic energy conserved).
 ---
 
 ## Notes & behavior
