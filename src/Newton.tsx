@@ -1,6 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import './index.css';
 
+function NewtonFirstLaw() {
+    const [pos, setPos] = useState(0); // px
+    const [vel, setVel] = useState(100); // px/s
+    const [running, setRunning] = useState(false);
+    const rafRef = useRef<number | null>(null);
+    const lastRef = useRef<number | null>(null);
+}
+
 function NewtonSecondLaw() {
     const [mass, setMass] = useState(1); // kg
     const [force, setForce] = useState(0); // N
