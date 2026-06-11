@@ -1,9 +1,10 @@
 import './App.css';
-import { NewtonThirdLaw, NewtonSecondLaw } from './Newton.tsx';
+import { NewtonThirdLaw, NewtonSecondLaw, NewtonFirstLaw } from './Newton.tsx';
 
 function App() {
   return (
     <div className="App">
+      <NewtonFirstLaw />
       <NewtonSecondLaw />
       <NewtonThirdLaw />
     </div>

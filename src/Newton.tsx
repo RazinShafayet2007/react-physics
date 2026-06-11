@@ -7,6 +7,10 @@ function NewtonFirstLaw() {
     const [running, setRunning] = useState(false);
     const rafRef = useRef<number | null>(null);
     const lastRef = useRef<number | null>(null);
+
+    return (
+        <div className="p-5 font-sans"></div>
+    );
 }
 
 function NewtonSecondLaw() {
@@ -160,4 +164,4 @@ function NewtonThirdLaw() {
     );
 }
 
-export { NewtonThirdLaw, NewtonSecondLaw };
+export { NewtonThirdLaw, NewtonSecondLaw, NewtonFirstLaw };
