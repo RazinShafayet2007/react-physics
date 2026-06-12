@@ -4,6 +4,97 @@ This file explains the important lines in `src/Newton.tsx` and how they work. It
 
 ---
 
+## NewtonFirstLaw
+
+- `const [pos, setPos] = useState(0); // px`
+  - Stores the visual horizontal position (pixels) of the object. Initial 0 px.
+
+- `const [vel, setVel] = useState(100); // px/s`
+  - Stores the object's velocity in pixels per second used for the visualization. Default 100 px/s. This is the quantity that remains constant when net force is zero.
+
+- `const [mass, setMass] = useState(1); // kg (for reference)`
+  - Mass in kilograms; used to compute acceleration from net force. Defaults to 1 kg.
+
+- `const [force, setForce] = useState(0); // N - external/net force`
+  - The net external force applied to the object in Newtons. When this is 0 the first law applies (no acceleration).
+
+- `const [running, setRunning] = useState(false);`
+  - Controls whether the animation loop is running (Start/Pause).
+
+- `const rafRef = useRef<number | null>(null); const lastRef = useRef<number | null>(null);`
+  - `rafRef` stores the `requestAnimationFrame` id so it can be cancelled. `lastRef` stores the previous timestamp to compute `dt` between frames.
+
+- `const pxToMeter = 1 / 100;`
+  - Conversion factor mapping 100 pixels to 1 meter. Physics calculations use SI units (m, s, N) then convert to pixels for rendering.
+
+- `useEffect(() => { ... }, [running, force, mass, pos, vel])`
+  - The animation effect that updates position and velocity each frame when `running` is true. The dependency list includes values that affect each step.
+
+  - Inside the effect:
+
+  - `if (!running) { ... return; }`
+    - Cancels any existing animation frame and clears timing refs when paused.
+
+  - `const step = (t: number) => { ... }`
+    - Frame callback receiving a high-resolution timestamp `t` (ms). It computes `dt`, integrates acceleration to velocity and velocity to position, then schedules the next frame.
+
+  - `if (lastRef.current == null) lastRef.current = t;`
+    - Initialize `lastRef` on the first frame so the first `dt` is well-defined.
+
+  - `const dt = (t - lastRef.current) / 1000; lastRef.current = t;`
+    - Compute time delta in seconds between frames (requestAnimationFrame timestamps are in ms).
+
+  - `const a_m_s2 = mass > 0 ? force / mass : 0;`
+    - Compute acceleration in m/s^2 using `a = F/m`. If `force` is zero then `a=0` (Newton's first law condition).
+
+  - `const a_px_s2 = a_m_s2 / pxToMeter;`
+    - Convert acceleration from m/s^2 to px/s^2 for visualization units.
+
+  - `const newVel = vel + a_px_s2 * dt;`
+    - Euler integration of velocity: `v += a * dt`. When `a=0` the velocity remains unchanged, demonstrating the first law.
+
+  - `const newPos = pos + newVel * dt;`
+    - Euler integration of position: `x += v * dt` using the updated velocity.
+
+  - `setVel(newVel); setPos(newPos);`
+    - Update React state so the UI re-renders with the new position/velocity.
+
+  - `rafRef.current = requestAnimationFrame(step);`
+    - Queue the next animation frame to continue the loop.
+
+- `const reset = () => { ... }`
+  - Stops the animation and restores the default `pos`, `vel`, `force`, and `mass` values.
+
+- JSX controls and UI:
+  - Input `Initial Velocity` bound to `vel` to set the starting velocity (px/s).
+  - Input `External Net Force` bound to `force` (N); set this to 0 to observe inertia.
+  - Input `Mass` bound to `mass` (kg) used in acceleration calculation.
+  - Display line showing the computed acceleration `(force/mass)` and current `vel` (px/s).
+  - The visualization area draws an object using the `pos` state (left style) so it moves across the container.
+  - `Start/Pause` button toggles `running` to begin/pause the simulation; `Reset` calls `reset()`.
+
+### Example
+
+  If the net external force is zero, then by Newton's second law
+
+  $$\sum F = m a = 0 \implies a = 0.$$ 
+
+  Therefore $\ddot{x}(t)=0$ and the velocity is constant:
+
+  $$\dot{x}(t)=v_0,\qquad x(t)=x_0+v_0 t.$$ 
+
+- Numeric example:
+
+  Take $m=2\ \mathrm{kg}$, $x_0=0$, $v_0=3\ \mathrm{m/s}$. If the net force is zero then
+
+  $$x(t)=3t\ \mathrm{m}.$$ 
+
+  If instead a constant net force $F=4\ \mathrm{N}$ acts on the mass, the acceleration is $a=F/m=2\ \mathrm{m/s^2}$ and
+
+  $$\dot{x}(t)=3+2t,\qquad x(t)=3t+t^2\ \mathrm{m}.$$ 
+---
+
+
 ## NewtonSecondLaw
 
 - `const [mass, setMass] = useState(1); // kg`
