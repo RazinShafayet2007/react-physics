@@ -1,6 +1,6 @@
 # Newton Component — Line-by-line guide
 
-This file explains the important lines in `src/Newton.tsx` and how they work. It focuses on the two exported components: `NewtonSecondLaw` and `NewtonThirdLaw`.
+This file explains the important lines in `src/Newton.tsx` and how they work. It focuses on the three exported components: `NewtonFirstLaw`, `NewtonSecondLaw` and `NewtonThirdLaw`.
 
 ---
 
@@ -196,8 +196,6 @@ This file explains the important lines in `src/Newton.tsx` and how they work. It
 
 ## Notes & behavior
 
-- Integration method: both components use simple Euler integration (sufficient for demonstration; for higher accuracy use semi-implicit Euler or a smaller fixed dt).
+- Integration method: these three components use simple Euler integration (sufficient for demonstration; for higher accuracy use semi-implicit Euler or a smaller fixed dt).
 - Units mapping: physics calculations use SI (m, s, N) then convert to pixels for rendering using `pxToMeter`.
 - Collision: current detection is 1D and assumes axis-aligned circles/boxes; it resolves collisions with standard elastic formulas.
-
-If you want, I can also add comments directly inside `src/Newton.tsx` or create inline tooltips in the UI. Tell me which you'd prefer.
