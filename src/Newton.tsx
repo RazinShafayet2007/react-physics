@@ -95,8 +95,10 @@ function NewtonSecondLaw() {
     const [pos, setPos] = useState(0); // px
     const [vel, setVel] = useState(0); // px/s
     const [running, setRunning] = useState(false);
+    const [started, setStarted] = useState(false);
     const rafRef = useRef<number | null>(null);
     const lastRef = useRef<number | null>(null);
+    const runLabel = running ? 'Pause' : (started ? 'Continue' : 'Start');
 
     // conversion: treat 100 px = 1 meter for visualization
     const pxToMeter = 1 / 100;
@@ -143,6 +145,16 @@ function NewtonSecondLaw() {
         setVel(0);
         setForce(0);
         setMass(1);
+        setStarted(false);
+    };
+
+    const toggleRun = () => {
+        if (running){
+            setRunning(false);
+        } else {
+            setRunning(true);
+            setStarted(true);
+        }
     };
 
     return (
@@ -158,7 +170,7 @@ function NewtonSecondLaw() {
                 <div className="absolute top-4 w-10 h-10 bg-green-500 text-white flex items-center justify-center rounded" style={{ left: `${pos}px` }}>m</div>
             </div>
 
-            <button onClick={()=>setRunning(r=>!r)} className="mr-2 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">{running ? 'Pause' : 'Start'}</button>
+            <button onClick={toggleRun} className="mr-2 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">{runLabel}</button>
             <button onClick={reset} className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Reset</button>
         </div>
     );
