@@ -21,6 +21,8 @@ This file explains the important lines in `src/Newton.tsx` and how they work. It
 - `const [running, setRunning] = useState(false);`
   - Controls whether the animation loop is running (Start/Pause).
 
+- `const [started, setStarted] = useState(false);`
+
 - `const rafRef = useRef<number | null>(null); const lastRef = useRef<number | null>(null);`
   - `rafRef` stores the `requestAnimationFrame` id so it can be cancelled. `lastRef` stores the previous timestamp to compute `dt` between frames.
 
