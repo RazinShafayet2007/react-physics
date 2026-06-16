@@ -246,9 +246,9 @@ function NewtonThirdLaw() {
     return (
         <div className="p-5 font-sans">
             <h3 className="text-lg font-semibold mb-2">Newton's Third Law React Simulation</h3>
-            <p className="min-h-[20px] text-blue-600 mb-2">{log}</p>
+            <p className="min-h-5 text-blue-600 mb-2">{log}</p>
 
-            <div className="relative w-[600px] h-[100px] border border-gray-300 bg-gray-50 mb-5 overflow-hidden">
+            <div className="relative w-150 h-25 border border-gray-300 bg-gray-50 mb-5 overflow-hidden">
                 <div className="absolute top-6 w-12 h-12 bg-red-500 text-white flex items-center justify-center rounded" style={{ left: `${posA}px` }}>A</div>
                 <div className="absolute top-6 w-12 h-12 bg-blue-500 text-white flex items-center justify-center rounded" style={{ left: `${posB}px` }}>B</div>
             </div>
