@@ -93,15 +93,19 @@ function NewtonFirstLaw() {
 }
 
 function NewtonSecondLaw() {
-    const [mass, setMass] = useState(1); // kg
-    const [force, setForce] = useState(0); // N
-    const [pos, setPos] = useState(0); // px
-    const [vel, setVel] = useState(0); // px/s
+    const [mass, setMass] = useState<number | ''>(1); // kg
+    const [force, setForce] = useState<number | ''>(0); // N
+    const [pos, setPos] = useState<number | ''>(0); // px
+    const [vel, setVel] = useState<number | ''>(0); // px/s
     const [running, setRunning] = useState(false);
     const [started, setStarted] = useState(false);
     const rafRef = useRef<number | null>(null);
     const lastRef = useRef<number | null>(null);
     const runLabel = running ? 'Pause' : (started ? 'Continue' : 'Start');
+    const numericMass = typeof mass === 'number' ? mass : 0;
+    const numericVel = typeof vel === 'number' ? vel : 0;
+    const numericForce = typeof force === 'number' ? force : 0;
+    const numericPos = typeof pos === 'number' ? pos : 0;
 
     // conversion: treat 100 px = 1 meter for visualization
     const pxToMeter = 1 / 100;
@@ -120,13 +124,13 @@ function NewtonSecondLaw() {
             lastRef.current = t;
 
             // a = F / m (m in kg, F in N)
-            const a_m_s2 = mass > 0 ? force / mass : 0;
+            const a_m_s2 = numericMass > 0 ? numericForce / numericMass : 0;
 
             // convert acceleration to px/s^2
             const a_px_s2 = a_m_s2 / pxToMeter;
 
-            const newVel = vel + a_px_s2 * dt;
-            const newPos = pos + newVel * dt;
+            const newVel = numericVel + a_px_s2 * dt;
+            const newPos = numericPos + newVel * dt;
 
             setVel(newVel);
             setPos(newPos);
@@ -164,12 +168,12 @@ function NewtonSecondLaw() {
         <div className="p-5 font-sans">
             <h3 className="text-lg font-semibold mb-2">Newton's Second Law Simulation</h3>
 
-            <div className="mb-3">Force (N): <input type="number" value={force} onChange={e=>setForce(Number(e.target.value))} className="ml-2 border p-1"/></div>
-            <div className="mb-3">Mass (kg): <input type="number" min="0.01" step="0.1" value={mass} onChange={e=>setMass(Number(e.target.value))} className="ml-2 border p-1"/></div>
+            <div className="mb-3">Force (N): <input type="number" value={force === '' ? '' : force} onChange={e=>setForce(e.target.value === '' ? '' : Number(e.target.value))} className="ml-2 border p-1"/></div>
+            <div className="mb-3">Mass (kg): <input type="number" min="0.01" step="0.1" value={mass === '' ? '' : mass} onChange={e=>setMass(e.target.value === '' ? '' : Number(e.target.value))} className="ml-2 border p-1"/></div>
 
-            <p className="mb-2">Acceleration: {(mass>0 ? (force/mass).toFixed(2) : '0')} m/s^2 — Velocity: {vel.toFixed(2)} px/s</p>
+            <p className="mb-2">Acceleration: {(numericMass>0 ? (numericForce/numericMass).toFixed(2) : '0')} m/s^2 — Velocity: {numericVel.toFixed(2)} px/s</p>
 
-            <div className="relative w-[500px] h-[80px] border border-gray-300 bg-gray-50 mb-5">
+            <div className="relative w-125 h-20 border border-gray-300 bg-gray-50 mb-5">
                 <div className="absolute top-4 w-10 h-10 bg-green-500 text-white flex items-center justify-center rounded" style={{ left: `${pos}px` }}>m</div>
             </div>
 
